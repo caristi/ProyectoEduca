@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+          				   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+          				   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+          				   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+	
+	<context:annotation-config/>
+	
+	<!-- Configuracion de Database y Hibernate -->
+		<import resource="/hibernate/DataSource.xml"/>
+		<import resource="/hibernate/Hibernate.xml"/>
+ 
+        <!-- Configuracion Bean -->
+
+		<bean id="facturaBean" class="com.siv.bean.FacturaBean">
+		</bean>				
+		
+		<!-- Configuracion Servicios -->
+		
+		<bean id="colegioSrv" class="com.siv.services.impl.ColegioSrvImpl">
+			<property name="colegioDao" ref="colegioDao" />
+		</bean>		
+		
+		<!-- Configuracion DAOs -->
+		
+		<bean id="colegioDao" class="com.siv.dao.impl.ColegioDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory" />
+		</bean>		
+</beans>

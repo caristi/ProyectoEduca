@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="../../vista/template/layout.xhtml">
+   
+<ui:define name="content">
+    <h:form id="formCole" enctype="multipart/form-data">
+    
+       <article class="module width_full">
+         
+         <div class="row">
+			   <div class="col-sm-12">
+			        <h1 class="site_title"><h:outputText value="Registro Factura" /></h1>
+			   </div>
+		</div>	
+		
+         <div class="row">
+			   <div class="col-sm-12">
+			       <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			   </div>
+		</div>	
+		
+	    <div class="row">
+			   <div class="col-sm-2">
+			      <h:outputLabel value="Número factura"/>
+			   </div>
+			   <div class="col-sm-2">
+				  <h:inputText id="numFactura" value="#{facturaBean.facCabeceraDto.numFactura}"/>	
+			   </div>	
+			   <div class="col-sm-2">
+			      <h:outputLabel value="Fecha factura"/>
+			   </div>
+			   <div class="col-sm-2">
+			   	  <p:calendar id="fecFactura" value="#{facturaBean.facCabeceraDto.fechaFactura}" showOn="button">
+			   	   
+			   	  </p:calendar>
+			   </div>			   		   
+		</div>	
+		
+	   <div class="row">
+			   <div class="col-sm-2">
+			       <h:outputLabel value="Cliente"/>
+			   </div>
+			   <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
+			       <h:inputText id="cliente" value="#{facturaBean.facCabeceraDto.numFactura}"/>
+			   </div>			   
+		</div>	
+
+        <p:separator />
+            
+       <p:dataTable id="detalle" var="det" value="#{facturaBean.facCabeceraDto.listaDetalleFactura}" editable="true" editMode="cell" widgetVar="cellDetalle">
+		      <p:column headerText="Cantidad">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{det.cantidad}" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#{det.cantidad}" label="Cantidad"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+       </p:dataTable>     
+            
+			<h:panelGrid columns="2">
+			 
+			   <p:commandButton value="Guardar" 
+			   				    update="formCole"
+			   				    icon="ui-icon-disk"/>
+			</h:panelGrid>
+		</article>
+    </h:form>
+</ui:define>
+</ui:composition>
