@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,7 +28,11 @@ public class FacturaDetalleDto implements java.io.Serializable  {
 
 	@Column(name="det_cantidad")
 	private int cantidad;
-
+	
+	@ManyToOne
+	@JoinColumn(name="pro_id")
+	private ProductoDto productoDto;
+	
 	public int getId() {
 		return id;
 	}
@@ -57,5 +63,13 @@ public class FacturaDetalleDto implements java.io.Serializable  {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public ProductoDto getProductoDto() {
+		return productoDto;
+	}
+
+	public void setProductoDto(ProductoDto productoDto) {
+		this.productoDto = productoDto;
 	}
 }

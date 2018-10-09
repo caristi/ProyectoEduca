@@ -8,8 +8,8 @@
     template="../../vista/template/layout.xhtml">
    
 <ui:define name="content">
-    <h:form id="formCole" enctype="multipart/form-data">
-    
+    <h:form id="form" enctype="multipart/form-data">
+       <p:growl id="msgs" showDetail="true"/>
        <article class="module width_full">
          
          <div class="row">
@@ -52,19 +52,57 @@
 
         <p:separator />
             
-       <p:dataTable id="detalle" var="det" value="#{facturaBean.facCabeceraDto.listaDetalleFactura}" editable="true" editMode="cell" widgetVar="cellDetalle">
+       <p:dataTable id="detalle" var="det" value="#{facturaBean.facCabeceraDto.listaDetalleFactura}" editable="true">
+		      
+		      <f:facet name="header">
+           Row Editing
+       </f:facet>
+		      
+		      <p:ajax event="rowEdit" listener="#{facturaBean.actualizarCelda}" update=":form:msgs" />
+		      
+		      <p:column headerText="Id">
+	              <p:cellEditor>
+	                  <f:facet name="output"><h:outputText value="#{det.id}"/></f:facet>
+	                  <f:facet name="input"><p:inputText id="modelInput" value="#{det.id}" style="width:96%"/></f:facet>
+	              </p:cellEditor>
+	          </p:column>
+		      
+		      
 		      <p:column headerText="Cantidad">
 		           <p:cellEditor>
 		               <f:facet name="output"><h:outputText value="#{det.cantidad}" /></f:facet>
 		               <f:facet name="input"><p:inputText value="#{det.cantidad}" label="Cantidad"/></f:facet>
 		           </p:cellEditor>
 		       </p:column>
-       </p:dataTable>     
+		       
+		       <p:column headerText="Producto">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{det.productoDto.id}" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#{det.productoDto.id}" label="Producto"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       
+		       <p:column headerText="Valor">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{det.vlrProducto}" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#{det.vlrProducto}" label="Valor"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       
+		       <p:column style="width:32px">
+		           <p:rowEditor />
+		       </p:column>
+       </p:dataTable> 
+       
+       <p:contextMenu for="detalle" widgetVar="cMenu">   
+	       <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellDetalle').showCellEditor();return false;"/>  
+	       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+	   </p:contextMenu>     
             
 			<h:panelGrid columns="2">
 			 
 			   <p:commandButton value="Guardar" 
-			   				    update="formCole"
+			   				    update="form"
 			   				    icon="ui-icon-disk"/>
 			</h:panelGrid>
 		</article>
