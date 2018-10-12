@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="vista/template/layout.xhtml">
+   
+<ui:define name="content">
+    <h:form enctype="multipart/form-data">
+    
+        <f:metadata>
+  			<f:viewParam name="idMateria" value="#{reportesBean.idMateria}"/>
+		</f:metadata>
+      
+       <article class="module width_full">
+       
+          <h1 class="site_title"><h:outputText value="Reporte Inasistencia por Materia" /></h1>
+          
+          <p:panelGrid columns="6" style="width:100%">
+					  
+			  <h:outputLabel value="Grupo:"/>
+			  <h:selectOneMenu id="idGrupo"
+					  		   value="#{reportesBean.idGrupo}"
+					  		   style="width:150px">
+					  		<f:selectItem itemValue="" itemLabel="Seleccionar" />
+					  		<f:selectItems value="#{listaValoresBean.listaGrupos}" var="tipo"  itemValue="#{tipo.codItem}" itemLabel="#{tipo.nomItem}"/>
+					  <p:ajax event="change" listener="#{listaValoresBean.cambiarListaMateriaXgrupo(reportesBean.idGrupo)}" update="idMateria" />	  			
+			  </h:selectOneMenu>
+				
+			  <h:outputLabel value="Materias:"/>
+				  <h:selectOneMenu id="idMateria"
+						  		   value="#{reportesBean.idMateria}"
+						  		   style="width:150px">
+						  		<f:selectItem itemValue="" itemLabel="Seleccionar" />
+						  		<f:selectItems value="#{listaValoresBean.listaMateriasXgrupo}" var="tipo"  itemValue="#{tipo.codItem}" itemLabel="#{tipo.nomItem}"/>
+			  </h:selectOneMenu>
+		  </p:panelGrid>
+		  
+		   <p:separator />
+		
+		  <h:panelGrid>
+			   <p:commandButton value="Consultar" 
+			   				    action="#{reportesBean.consultarInasitenciaPorMateria}"
+			   				    update="tbReporMateria"
+			   				    icon="ui-icon-search" 
+			   				    style="background:#00a72c !important;color: white;font-weight: inherit;" />
+		  </h:panelGrid>
+          
+          
+          <h:panelGrid>
+              <p:dataTable id="tbReporMateria" value="#{reportesBean.listaReporteMateria}" var="rep"
+              			   rows="10" paginator="true" rowsPerPageTemplate="5,10,15" scrollable="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+ 
+				   <p:column headerText="Codigo">
+					   <h:outputText value="#{rep.codigoEst}" />
+					</p:column>
+					
+					<p:column headerText="Nombre">
+					   <h:outputText value="#{rep.nombreEst}" />
+					</p:column>
+					
+					<p:column headerText="Apellidos" style="width:20%;">
+					   <h:outputText value="#{rep.apelledio1Est} #{rep.apelledio2Est}" />
+					</p:column>
+					
+					<p:column headerText="Sin Excusas">
+					   <h:outputText value="#{rep.cantidadSinExcusas}" />
+					</p:column>	
+					
+					<p:column headerText="Con Excusas">
+					   <h:outputText value="#{rep.cantidadConExcusas}" />
+					</p:column>	
+					
+					<p:column headerText="Act. institucional">
+					   <h:outputText value="#{rep.cantidadActivInstitucional}" />
+					</p:column>		
+					
+				   <p:column headerText="Tarde">
+					   <h:outputText value="#{rep.cantidadTarde}" />
+					</p:column>	
+									
+		      </p:dataTable>
+
+		</h:panelGrid>
+			
+		</article>
+    </h:form>
+</ui:define>
+</ui:composition>

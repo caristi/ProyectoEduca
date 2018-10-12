@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="vista/template/layout.xhtml">
+   
+<ui:define name="content">
+
+		<script type="text/javascript">
+		    function handleDrop(event, ui) {
+		        
+		    	var listaSelEstuGrupo = ui.draggable;
+		 
+		        listaSelEstuGrupo.fadeOut('fast');
+		    }
+		</script>
+    <h:form id="formRel" enctype="multipart/form-data">
+      
+       <article class="module width_full">
+            <h1 class="site_title"><h:outputText value="Relación Grupo Estudiantes" /></h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+			<p:tabView>
+			 <p:tab title="Relacionar Estudiantes con Grupo">
+				  <p:panelGrid columns="2">	 
+					 <p:panelGrid>
+			           	  <h:outputLabel value="Grupo:">
+			           	    <span style="color:D41212;">*</span>
+			           	  </h:outputLabel>
+						  <p:selectOneListbox id="idGrupo"
+								  		   value="#{asociacionesBean.seleGrupo}"
+								  		   style="width:70px;height:400px">
+								  		<f:selectItems value="#{listaValoresBean.listaGrupos}" var="tipo"  
+								  			           itemValue="#{tipo.codItem};;#{tipo.nomItem}" itemLabel="#{tipo.nomItem}"/>
+									    <p:ajax listener="#{asociacionesBean.seleccionGrupo}" update="panelGridTbl panelGridEstu2" />
+						 </p:selectOneListbox>
+					  			     
+					</p:panelGrid> 				  			   			  			   			  			   			  			   			  			   			  			   			  			   			  			   		  				   		  				   
+						
+					<h:panelGrid id ="panelGridTbl">  
+			           
+			           <h:panelGrid rendered="#{asociacionesBean.mostrarGrupo}"> 
+						    <p:fieldset id="availableEst" legend="Estudiantes sin relacion">
+						        <p:dataTable id="availableEstudiantes" var="est" value="#{asociacionesBean.listaEstudiantes}"
+						        			 filteredValue="#{asociacionesBean.listaFiltroEstudi}" rows="15" paginator="true"
+						        			 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			                         		 rowsPerPageTemplate="5,10,15">
+						            
+						            <p:column style="width:20px">
+						                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+						                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+						            </p:column>
+						            <p:column headerText="Id" filterBy="#{est.id}" filterMatchMode="contains" >
+						                <h:outputText value="#{est.id}" />
+						            </p:column>
+						           	<p:column headerText="Apellido Uno" filterBy="#{est.apellido1}" filterMatchMode="contains" >
+						                <h:outputText value="#{est.apellido1}"  filterBy="#{est.apellido1}" filterMatchMode="contains"/>
+						            </p:column> 
+						            <p:column headerText="Apellido Dos" filterBy="#{est.apellido2}" filterMatchMode="contains">
+						                <h:outputText value="#{est.apellido2}" />
+						            </p:column>
+						           	<p:column headerText="Nombre(s)" filterBy="#{est.nombre}" filterMatchMode="contains">
+						                <h:outputText value="#{est.nombre}" />
+						            </p:column> 			 
+						        </p:dataTable>
+						    </p:fieldset>
+						</h:panelGrid>
+					</h:panelGrid>	
+				</p:panelGrid>
+					<h:panelGrid id ="panelGridEstu2">  
+					   <h:panelGrid rendered="#{asociacionesBean.mostrarGrupo}"> 
+						    <p:fieldset id="selectedEst" legend="Grupo #{asociacionesBean.seleGrupoNom}" style="margin-top:20px">
+						        <p:outputPanel id="dropArea">
+						            <h:outputText value="Arreste hasta aqui los estudiantes del grupo #{asociacionesBean.seleGrupoNom}" rendered="#{empty asociacionesBean.listaSelEstuGrupo}" style="font-size:24px;" />
+						           
+						            <p:dataTable id="selectedEstuTable" var="est" value="#{asociacionesBean.listaSelEstuGrupo}" rendered="#{not empty asociacionesBean.listaSelEstuGrupo}"
+						            		     widgetVar="tabSeleccionados" filteredValue="#{asociacionesBean.listaFiltroSelEstu}">
+							            
+							            <p:column headerText="Id" filterBy="#{est.id}" filterMatchMode="contains">
+							                <h:outputText value="#{est.id}" />
+							            </p:column>
+							           	<p:column headerText="Apellido Uno" filterBy="#{est.apellido1}" filterMatchMode="contains">
+							                <h:outputText value="#{est.apellido1}" />
+							            </p:column> 
+							            <p:column headerText="Apellido Dos" filterBy="#{est.apellido2}" filterMatchMode="contains">
+							                <h:outputText value="#{est.apellido2}" />
+							            </p:column>
+							           	<p:column headerText="Nombre(s)" filterBy="#{est.nombre}" filterMatchMode="contains">
+							                <h:outputText value="#{est.nombre}" />
+							            </p:column>
+							            
+							            <p:column style="width:20px">
+											<p:commandLink action="#{asociacionesBean.quitarEstudiante(est)}" styleClass="ui-icon ui-icon-circle-close" 
+														   update=":formRel"/>
+						            	</p:column>
+							            
+						            </p:dataTable>
+						        </p:outputPanel>
+						    </p:fieldset>
+						 
+						    <p:droppable for="selectedEst" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableEstudiantes" onDrop="handleDrop">
+						        <p:ajax listener="#{asociacionesBean.onEstudianteDrop}" update="dropArea availableEst" />
+						    </p:droppable>
+						    
+						    <p:separator />
+						    
+						    <h:panelGrid columns="4">
+						       <p:commandButton value="Guardar Relación" 
+								   				action="#{asociacionesBean.guardarGrupoEstudi}"
+								   				update="panelGridTbl panelGridEstu2 idGrupo"
+								   				icon="ui-icon-disk" 
+								   				style="background:#00a72c !important;color: white; font-weight: inherit;" />
+							</h:panelGrid>
+						    
+					  </h:panelGrid>
+					</h:panelGrid>
+			 </p:tab>
+<!-- 		     <p:tab title="Relacionar Materia Docente"> -->
+				  
+<!-- 				<p:panelGrid columns="2">	 -->
+					
+<!-- 					<p:panelGrid> -->
+<!-- 					    <p:outputLabel for="materias" value="Materias:" /> -->
+<!-- 				        <p:selectOneListbox id="materias" -->
+<!-- 								  		    value="#{asociacionesBean.seleMateria}" -->
+<!-- 								  		    style="width:150px"> -->
+<!-- 									  		<f:selectItems value="#{listaValoresBean.listaMateriasSinAsociacion}" var="tipo"   -->
+<!-- 									  			           itemValue="#{tipo.codItem};;#{tipo.nomItem}" itemLabel="#{tipo.nomItem}"/> -->
+<!-- 										    <p:ajax listener="#{asociacionesBean.seleccionMateria}" update="panelGridDocentes panelGridDocentes2" /> -->
+<!-- 						 </p:selectOneListbox> -->
+<!-- 			        </p:panelGrid> -->
+					
+<!-- 					<h:panelGrid id ="panelGridDocentes">   -->
+			           
+<!-- 			           <h:panelGrid rendered="#{asociacionesBean.mostrarMateria}">  -->
+<!-- 						    <p:fieldset id="availableDoc" legend="Docentes"> -->
+<!-- 						        <p:dataTable id="tblDocentes" var="doc" value="#{asociacionesBean.listaDocentes}" -->
+<!-- 						        			 filteredValue="#{asociacionesBean.listaFiltroDocente}" rows="5" paginator="true" -->
+<!-- 						        			 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"> -->
+						            
+<!-- 						            <p:column style="width:20px"> -->
+<!-- 						                <h:outputText id="dragIconDoc" styleClass="ui-icon ui-icon-arrow-4" /> -->
+<!-- 						                <p:draggable for="dragIconDoc" revert="true" helper="clone"/> -->
+<!-- 						            </p:column> -->
+<!-- 						            <p:column headerText="Id" filterBy="#{doc.id}" filterMatchMode="contains" > -->
+<!-- 						                <h:outputText value="#{doc.id}" /> -->
+<!-- 						            </p:column> -->
+<!-- 						           	<p:column headerText="Apellido Uno" filterBy="#{doc.apellido1}" filterMatchMode="contains" > -->
+<!-- 						                <h:outputText value="#{doc.apellido1}"  filterBy="#{doc.apellido1}" filterMatchMode="contains"/> -->
+<!-- 						            </p:column>  -->
+<!-- 						            <p:column headerText="Apellido Dos" filterBy="#{doc.apellido2}" filterMatchMode="contains"> -->
+<!-- 						                <h:outputText value="#{doc.apellido2}" /> -->
+<!-- 						            </p:column> -->
+<!-- 						           	<p:column headerText="Nombre(s)" filterBy="#{doc.nombre}" filterMatchMode="contains"> -->
+<!-- 						                <h:outputText value="#{doc.nombre}" /> -->
+<!-- 						            </p:column> 			  -->
+<!-- 						        </p:dataTable> -->
+<!-- 						    </p:fieldset> -->
+<!-- 						</h:panelGrid> -->
+<!-- 		            </h:panelGrid> -->
+<!-- 		       </p:panelGrid>  -->
+		       
+<!-- 		       <h:panelGrid id ="panelGridDocentes2">   -->
+<!-- 						<h:panelGrid rendered="#{asociacionesBean.mostrarMateria}">  -->
+<!-- 						    <p:fieldset id="selectedDoc" legend="Grupo #{asociacionesBean.seleMateNom}" style="margin-top:20px"> -->
+<!-- 						        <p:outputPanel id="dropAreaDoc"> -->
+<!-- 						            <h:outputText value="Arreste hasta aqui el docente de la Materia #{asociacionesBean.seleMateNom}" rendered="#{empty asociacionesBean.listaSelDocMateria}" style="font-size:24px;" /> -->
+						           
+<!-- 						            <p:dataTable id="selectedDocTable" var="doc" value="#{asociacionesBean.listaSelDocMateria}" rendered="#{not empty asociacionesBean.listaSelDocMateria}" -->
+<!-- 						            		     filteredValue="#{asociacionesBean.listaFiltroSelDoc}"> -->
+							            
+<!-- 							            <p:column headerText="Id" filterBy="#{doc.id}" filterMatchMode="contains"> -->
+<!-- 							                <h:outputText value="#{doc.id}" /> -->
+<!-- 							            </p:column> -->
+<!-- 							           	<p:column headerText="Apellido Uno" filterBy="#{doc.apellido1}" filterMatchMode="contains"> -->
+<!-- 							                <h:outputText value="#{doc.apellido1}" /> -->
+<!-- 							            </p:column>  -->
+<!-- 							            <p:column headerText="Apellido Dos" filterBy="#{doc.apellido2}" filterMatchMode="contains"> -->
+<!-- 							                <h:outputText value="#{doc.apellido2}" /> -->
+<!-- 							            </p:column> -->
+<!-- 							           	<p:column headerText="Nombre(s)" filterBy="#{doc.nombre}" filterMatchMode="contains"> -->
+<!-- 							                <h:outputText value="#{doc.nombre}" /> -->
+<!-- 							            </p:column> -->
+<!-- 							            <p:column style="width:20px"> -->
+<!-- 											<p:commandLink action="#{asociacionesBean.quitarDocente(doc)}" styleClass="ui-icon ui-icon-circle-close"  -->
+<!-- 														   update=":formRel"/> -->
+<!-- 						            	</p:column> -->
+						            	
+<!-- 						            </p:dataTable> -->
+<!-- 						        </p:outputPanel> -->
+<!-- 						    </p:fieldset> -->
+						 
+<!-- 						    <p:droppable for="selectedDoc" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="tblDocentes" onDrop="handleDrop"> -->
+<!-- 						        <p:ajax listener="#{asociacionesBean.onDocentesDrop}" update="dropAreaDoc availableDoc" /> -->
+<!-- 						    </p:droppable> -->
+<!-- 						    <p:separator /> -->
+						    
+<!-- 						    <h:panelGrid columns="4"> -->
+<!-- 						       <p:commandButton value="Guardar Relación"  -->
+<!-- 								   				action="#{asociacionesBean.guardarDocenteMateria}" -->
+<!-- 								   				update="panelGridDocentes panelGridDocentes2 materias" -->
+<!-- 								   				icon="ui-icon-disk" /> -->
+<!-- 							</h:panelGrid> -->
+<!-- 					   </h:panelGrid> -->
+<!-- 					</h:panelGrid> -->
+<!-- 				  </p:tab>	 -->
+		    </p:tabView>
+		</article>
+    </h:form>
+</ui:define>
+</ui:composition>

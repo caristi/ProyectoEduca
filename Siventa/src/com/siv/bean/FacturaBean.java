@@ -41,6 +41,4 @@ public class FacturaBean {
 	public void setFacCabeceraDto(FacturaCabeceraDto facCabeceraDto) {
 		this.facCabeceraDto = facCabeceraDto;
 	}
-
-
 }

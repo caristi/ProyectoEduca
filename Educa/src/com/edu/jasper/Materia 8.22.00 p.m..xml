@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<materia>
+  
+  <inf_colegio>
+    <nom_colegio>COLEGIO SAN LUIS GONZAGA</nom_colegio>
+    <dir_colegio>CARRERA 8  8 - 29</dir_colegio>
+    <tlf_colegio>8900635</tlf_colegio>
+    <ciu_colegio>Manizales</ciu_colegio>
+  </inf_colegio>
+  <inf_materia>
+	<nom_materia>ESPAÑOL</nom_materia>
+    <nom_grupo>9A</nom_grupo>
+    <nom_docente>CARLOS HUGO ARISTIZABAL GARCIA</nom_docente>
+   </inf_materia>
+   <estudiantes>
+     <estudiante codigo="1">
+          <est_nom>JORGE EDUARDO VILLA GARCIA</est_nom>
+          <est_falla>3</est_falla>
+          <est_excusas>0</est_excusas>
+          <est_tarde>3</est_tarde>
+     </estudiante>
+     <estudiante codigo="4">
+          <est_nom>CARLOS EDUARDO VILLA GARCIA</est_nom>
+          <est_falla>1</est_falla>
+          <est_excusas>1</est_excusas>
+          <est_tarde>1</est_tarde>
+     </estudiante>
+   </estudiantes>
+</materia>
