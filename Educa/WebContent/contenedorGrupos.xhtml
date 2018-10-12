@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="vista/template/layout.xhtml">
+   
+<ui:define name="content">
+    <h:form id="formGru" enctype="multipart/form-data">
+      
+       <article class="module width_full">
+            <h1 class="site_title"><h:outputText value="Administrador de Grupos" /></h1>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+			<p:panel>
+				 <p:panelGrid columns="6">
+
+					  <h:outputLabel value="Nombre:" style="width:20%">
+						<span style="color:D41212;">*</span>
+					  </h:outputLabel>		  
+					  <h:inputText id="nombre"
+					  			   value="#{grupoBean.grupoDto.nombre}" 
+					  			   style="width:150px;text-transform: uppercase"/>
+					  
+					  <h:outputLabel value="Ciclo:" style="width:20%"/>
+					  <h:selectOneMenu id="tipoCiclo"
+						  			   value="#{grupoBean.grupoDto.ciclo}"
+						  			   style="width:130px">
+						  <f:selectItem itemValue="" itemLabel="Seleccionar" />
+				   		  <f:selectItems value="#{listaValoresBean.listaCiclosEscolar}" var="tipo"  itemValue="#{tipo.nomItem}" itemLabel="#{tipo.nomItem}"/>
+					  </h:selectOneMenu> 			   	
+				</p:panelGrid> 				  			   			  			   			  			   			  			   			  			   			  			   			  			   			  			   		  				   		  				   
+            </p:panel>
+            
+			<h:panelGrid columns="4">
+			   <p:commandButton value="Guardar" 
+			   					rendered="#{!grupoBean.habilitaActualizar}"
+			   				    action="#{grupoBean.guardarGrupo}"
+			   				    update="tbGrupo formGru"
+			   				    icon="ui-icon-disk" 
+			   				    style="background:#00a72c !important;color: white;    font-weight: inherit;"  />
+			   				    
+			   <p:commandButton value="Actualizar" 
+			   					rendered="#{grupoBean.habilitaActualizar}"
+			   				    action="#{grupoBean.actualizarGrupo}"
+			   				    update="tbGrupo formGru"
+			   				    icon="ui-icon-disk" 
+			   				    style="background:#00a72c !important;color: white;    font-weight: inherit;" />			   				    
+			   				    
+			   <p:commandButton value="Buscar" 
+			   				    action="#{grupoBean.buscarGrupo}"
+			   				    update="tbGrupo"
+			   				    icon="ui-icon-disk" 
+			   				    style="background:#5093c3 !important;color: white;    font-weight: inherit;"/>
+			   				    
+			   <p:commandButton value="Limpiar" 
+			   				    action="#{grupoBean.limpiar}"
+			   				    update="tbGrupo formGru"
+			   				    icon="ui-icon-disk" 
+			   				    style="background:#b94a48 !important;color: white;    font-weight: inherit;"/>					   				    			   				    
+			</h:panelGrid>
+			
+		  <p:separator />
+			
+		<h:panelGrid id ="panelGridTbl">  
+             
+              <p:dataTable id="tbGrupo" value="#{grupoBean.listaGrupos}" var="gru" style="width:45%;"
+              			   rows="10" paginator="true" rowsPerPageTemplate="5,10,15" emptyMessage="No se encuentrar registros"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+ 
+				   <p:column headerText="Código" style="font-size:12px;width:40px;" >
+					   <h:outputText value="#{gru.id}"  />
+					</p:column>
+					
+				   <p:column headerText="Nombre" style="font-size:12px;text-align: center">
+					   <h:outputText value="#{gru.nombre}" />
+					</p:column>	
+					
+					<p:column headerText="Ciclo" style="font-size:12px;text-align: center">
+					   <h:outputText value="#{gru.ciclo}" />
+					</p:column>	
+					
+					<p:column style="width:32px;text-align: center">
+					    <p:commandButton update=":formGru" icon="ui-icon-pencil" title="Vista">
+				            <f:setPropertyActionListener value="#{gru}" target="#{grupoBean.selectGrupoDto}" />
+				        </p:commandButton>
+					</p:column>													
+ 
+		      </p:dataTable>
+
+		</h:panelGrid>
+			
+		</article>
+    </h:form>
+</ui:define>
+</ui:composition>

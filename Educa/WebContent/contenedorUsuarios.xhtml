@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="vista/template/layout.xhtml">
+   
+<ui:define name="content">
+    <h:form id="formUsu" enctype="multipart/form-data">
+      
+       <article class="module width_full">
+            
+            <h1 class="site_title"><h:outputText value="Administrador de usuarios" /></h1>
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+			
+			<p:panel header="Acceso a Usuario"  style="width:100%">
+				 <p:panelGrid columns="8">
+					  <p:outputPanel>
+						  <h:outputLabel value="Tipo de usuario">
+							<span style="color:D41212;">*</span>
+						  </h:outputLabel>					  
+						  <h:selectOneMenu id="tipoUsuario"
+						  			   	   value="#{usuarioBean.usuarioDto.tipoUsuarioDto.id}"
+						  			   	   style="width:130px">
+						  		<f:selectItem itemValue="" itemLabel="Seleccionar" />
+						  		<f:selectItems value="#{listaValoresBean.listaTipoUsuarios}" var="tipo"  itemValue="#{tipo.codItem}" itemLabel="#{tipo.nomItem}"/>
+						  		<p:ajax event="change"  update="relaGrupo pnlDatosUsu" />	
+						  </h:selectOneMenu>
+						  <p:message for="tipoUsuario" display="icon text" />
+					  </p:outputPanel>
+					  <p:outputPanel>
+						  <h:outputLabel value="Estado">
+							<span style="color:D41212;">*</span>
+						  </h:outputLabel>							   
+						  <h:selectOneMenu id="Estado"
+						  			   	   value="#{usuarioBean.usuarioDto.activo}"
+						  			   	   style="width:100px">
+						  			  	<f:selectItem itemValue="" itemLabel="Seleccionar"/>
+						  			   	<f:selectItem itemValue="A" itemLabel="Activo"/>
+								  		<f:selectItem itemValue="I" itemLabel="Inactivo"/>	  
+						  </h:selectOneMenu>	
+						  <p:message for="Estado" display="icon text" />		  			   
+					  </p:outputPanel>	
+					  
+					  <p:outputPanel>		   
+						  <h:outputLabel value="Login">
+							<span style="color:D41212;">*</span>
+						  </h:outputLabel>		  
+						  <h:inputText id="login"
+						  			   value="#{usuarioBean.usuarioDto.login}" 
+						  			   style="width:150px;text-transform: uppercase"/>	
+						  <p:message for="login" display="icon text" />			   
+					  </p:outputPanel>	
+					  
+					  <p:outputPanel>		   
+						  <h:outputLabel value="Contraseña">
+							<span style="color:D41212;">*</span>
+						  </h:outputLabel>						  
+						  <h:inputSecret id="contrasena"
+						  			     value="#{usuarioBean.usuarioDto.contrasena}" 
+						  			     style="width:150px"/>
+						  <p:message for="contrasena" display="icon text" />			     
+				  	  </p:outputPanel>		     
+				  	  
+				</p:panelGrid> 				  			   			  			   			  			   			  			   			  			   			  			   			  			   			  			   		  				   		  				   
+            </p:panel>
+            
+            <p:separator />
+            
+            <p:panel header="Datos de usuarios" style="width:100%" id="pnlDatosUsu">
+	            <p:panelGrid columns="6">
+
+				  <h:outputLabel value="Nombres" style="width:20%">
+					<span style="color:D41212;">*</span>
+				  </h:outputLabel>			  
+				  <h:inputText id="nombre"
+				  			   value="#{usuarioBean.usuarioDto.nombre}"
+				  			   style="width:150px;text-transform: uppercase" />	
+				  			   
+				  <h:outputLabel value="Primer Apellido" style="width:20%">
+					<span style="color:D41212;">*</span>
+				  </h:outputLabel>						  
+				  <h:inputText id="apellido1"
+				  			   value="#{usuarioBean.usuarioDto.apellido1}" 
+				  			   style="width:150px;text-transform: uppercase"/>	
+				  			   
+				  <h:outputLabel value="Segundo Apellido" style="width:20%"/>
+				  <h:inputText id="apellido2"
+				  			   value="#{usuarioBean.usuarioDto.apellido2}" 
+				  			   style="width:150px;text-transform: uppercase"/>	
+				 			   
+				  <h:outputText value="Direccion" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"/>
+				  <h:inputText id="direccion" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"
+				  			   value="#{usuarioBean.usuarioDto.direccion}" 
+				  			   style="width:150px;text-transform: uppercase"/>	
+				  			   
+				  <h:outputText value="Telefono Hogar" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"/>
+				  <h:inputText id="numTlfHogar" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"
+				  			   value="#{usuarioBean.usuarioDto.numTlfHogar}" 
+				  			   style="width:150px;text-transform: uppercase"/>	
+				  			   
+				  <h:outputText value="Numero Celular" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"/>
+				  <h:inputText id="numCelular" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"
+				  			   value="#{usuarioBean.usuarioDto.numCelular}" 
+				  			   style="width:150px;text-transform: uppercase"/>	
+				  			   
+				  <h:outputText value="Correo Electronico" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"/>
+				  <h:inputText id="email" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}"
+				  			   value="#{usuarioBean.usuarioDto.email}" 
+				  			   style="width:150px;text-transform: uppercase"/>	
+			    </p:panelGrid>
+			 </p:panel>  
+			 
+			<p:panel id="relaGrupo">
+			 <p:panel header="Relación estudiante" style="width:100%" rendered="#{usuarioBean.usuarioDto.tipoUsuarioDto.id eq 2}">
+	            <p:panelGrid columns="6"> 
+                  	  <h:outputLabel value="Codigo">
+						<span style="color:D41212;">*</span>
+					  </h:outputLabel>		  
+					  <h:inputText id="codigoEst"
+					  			   value="#{usuarioBean.estudianteDto.codigo}" 
+					  			   style="width:150px;text-transform: uppercase"/>	
+	                  
+	                  <h:outputLabel value="Grupo"/>
+					  <h:selectOneMenu id="idGrupo"
+							  		   value="#{usuarioBean.estudianteDto.grupoDto.id}"
+							  		   style="width:150px">
+							  		<f:selectItem itemValue="" itemLabel="Seleccionar" />
+							  		<f:selectItems value="#{listaValoresBean.listaGrupos}" var="tipo"  itemValue="#{tipo.codItem}" itemLabel="#{tipo.nomItem}"/>
+					  </h:selectOneMenu>
+	            
+	            </p:panelGrid>
+	         </p:panel>  
+	        </p:panel>  
+			 
+		<p:separator />
+
+			<h:panelGrid columns="4">
+			   <p:commandButton value="Guardar" 
+			   					rendered="#{!usuarioBean.habilitaActualizar}"
+			   				    action="#{usuarioBean.crearUsuario}"
+			   				    update="tbUsuario formUsu"
+			   				    style="background:#00a72c !important;color: white;    font-weight: inherit;" 
+			   				    icon="ui-icon-disk" />
+			   				    
+			   <p:commandButton value="Actualizar" 
+			   					rendered="#{usuarioBean.habilitaActualizar}"
+			   				    action="#{usuarioBean.actualizarUsuario}"
+			   				    update="tbUsuario formUsu"
+			   				    style="background:#00a72c !important;color: white;    font-weight: inherit;" 
+			   				    icon="ui-icon-disk" />			   				    
+			   				    
+			   <p:commandButton value="Buscar" 
+			   				    action="#{usuarioBean.buscarUsuario}"
+			   				    update=":formUsu:panelGridTbl"
+			   				    style="background:#5093c3 !important;color: white;    font-weight: inherit;"
+			   				    icon="ui-icon-search" />
+			   				    
+			   <p:commandButton value="Limpiar" 
+			   				    action="#{usuarioBean.limpiar}"
+			   				    update="tbUsuario formUsu"
+			   				    style="background:#b94a48 !important;color: white;    font-weight: inherit;"
+			   				    icon=" ui-icon-trash" />					   				    			   				    
+			</h:panelGrid>
+			
+		  <p:separator />
+			
+		<h:panelGrid id ="panelGridTbl">  
+              <p:dataTable id="tbUsuario" value="#{usuarioBean.listaUsuarios}" var="usu"
+              			   rows="10" paginator="true" rowsPerPageTemplate="5,10,15" emptyMessage="No se encuentrar registros"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+ 
+				   <p:column headerText="Codigo" style="font-size:12px;width:40px;" >
+					   <h:outputText value="#{usu.id}"  />
+					</p:column>
+					
+				   <p:column headerText="Tipo doc" style="font-size:12px;text-align: center">
+					   <h:outputText value="#{usu.tipDocum}" />
+					</p:column>	
+					
+				   <p:column headerText="Núm doc" style="font-size:12px;">
+					   <h:outputText value="#{usu.numDocum}" />
+					</p:column>	
+					
+					<p:column headerText="Nombres" style="font-size:12px;">
+					   <h:outputText value="#{usu.nombre}"/>
+					</p:column>	
+					
+					<p:column headerText="Primer Apelledo" style="font-size:12px;">
+					   <h:outputText value="#{usu.apellido1}" />
+					</p:column>	
+					
+					<p:column headerText="Segundo Apelledo" style="font-size:12px;">
+					   <h:outputText value="#{usu.apellido2}" />
+					</p:column>								
+					
+					<p:column style="width:32px;text-align: center">
+					    <p:commandButton update=":formUsu" icon="ui-icon-pencil" title="Vista">
+				            <f:setPropertyActionListener value="#{usu}" target="#{usuarioBean.selectedUsuario}" />
+				        </p:commandButton>
+					</p:column>													
+ 
+		      </p:dataTable>
+
+		</h:panelGrid>
+			
+		</article>
+    </h:form>
+</ui:define>
+</ui:composition>
