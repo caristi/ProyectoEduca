@@ -17,18 +17,41 @@
  
         <!-- Configuracion Bean -->
 
-		<bean id="facturaBean" class="com.siv.bean.FacturaBean">
-		</bean>				
+		<bean id="loginBean" scope="session" class="com.crm.bean.LoginBean">
+		   <property name="usuarioSrv" ref="usuarioSrv" />
+		   <property name="menuSrv" ref="menuSrv" />
+		</bean>
+		
+		<bean id="productoBean" scope="session" class="com.crm.bean.ProductoBean">
+		   <property name="productoSrv" ref="productoSrv" />
+		</bean>
 		
 		<!-- Configuracion Servicios -->
 		
-		<bean id="colegioSrv" class="com.siv.services.impl.ColegioSrvImpl">
-			<property name="colegioDao" ref="colegioDao" />
-		</bean>		
+		<bean id="usuarioSrv" class="com.crm.services.UsuarioSrv">
+			<property name="usuarioDao" ref="usuarioDao" />
+		</bean>
+		
+		<bean id="menuSrv" class="com.crm.services.MenuSrv">
+			<property name="menuDao" ref="menuDao" />
+		</bean>	
+		
+		 <bean id="productoSrv" class="com.crm.services.ProductoSrv">
+			<property name="productoDao" ref="productoDao" />
+		</bean>
 		
 		<!-- Configuracion DAOs -->
 		
-		<bean id="colegioDao" class="com.siv.dao.impl.ColegioDaoImpl">
+		<bean id="usuarioDao" class="com.crm.dao.UsuarioDao">
 			<property name="sessionFactory" ref="sessionFactory" />
-		</bean>		
+		</bean>
+		
+		<bean id="menuDao" class="com.crm.dao.MenuDao">
+			<property name="sessionFactory" ref="sessionFactory" />
+		</bean>	
+		
+		<bean id="productoDao" class="com.crm.dao.ProductoDao">
+			<property name="sessionFactory" ref="sessionFactory" />
+		</bean>
+		
 </beans>

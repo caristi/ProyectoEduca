@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core" lang="es">
 <h:head>
-	<title>Asiste</title>
+	<title>CRM</title>
 	<meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -23,7 +23,7 @@
 	<div class="row">
 	  <div class="col-sm-12">	
 			<div style="background: #2a3b66; height: 10%; margin-left: auto; margin-right: auto;">
-			   <h2 style="font-size: 22px; color: #ffffff; padding-left: 40%; padding-top: 2%">Login</h2>
+			   <h2 style="font-size: 22px; color: #ffffff; padding-left: 40%; padding-top: 2%">Portal Gestión Clientes</h2>
 			</div>
 	  </div>
 	</div>	
@@ -32,21 +32,22 @@
 	
 		<p:panel id="gripPpal"> 					 
 		<div class="row">
-			   <div class="col-sm-12">	
+			   <div class="col-sm-3 col-sm-offset-4">	
 				    <p:panel header="Ingresar Usuario y Contraseña" style="margin-left: auto ;margin-right:auto">
 							<div class="row">
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<h:outputLabel>Usuario:</h:outputLabel>
 								</div>
-								<div class="col-sm-7">
+								<div class="col-sm-6">
 									<h:inputText value="#{loginBean.username}" id="login" style="text-transform: uppercase" />
 								</div>
 							</div>	
+							
 							<div class="row">
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<h:outputLabel>Contraseñas:</h:outputLabel>
 								</div>
-								<div class="col-sm-7">
+								<div class="col-sm-6">
 									<h:inputSecret value="#{loginBean.contrasena}" id="contrasena" />
 								</div>
 							</div>
@@ -54,11 +55,14 @@
 							<div class="row">
 								   <div class="col-sm-12">
 										<p:commandButton value="Ingresar" action="#{loginBean.login()}"
-														  icon="icon-login" />
+														  icon="icon-login" update="@form"/>
 								   </div>
 							</div>
 				    </p:panel>	
 			   </div>
+			   <div class="col-sm-12">	
+			     <p:messages showDetail="true" autoUpdate="true" closable="true" />
+			   </div>  
 		</div>
 		
 		</p:panel>

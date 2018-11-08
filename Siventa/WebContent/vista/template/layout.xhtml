@@ -23,13 +23,28 @@
 	<div class="row">
 	  <div class="col-sm-12">	
 			<div style="background: #2a3b66; height: 10%; margin-left: auto; margin-right: auto;">
-			   <h2 style="font-size: 22px; color: #ffffff; padding-left: 40%; padding-top: 2%">Portal</h2>
+			   <h2 style="font-size: 22px; color: #ffffff; padding-left: 40%; padding-top: 2%">Portal Gestión Clientes</h2>
 			</div>
 	  </div>
 	</div>	
 
 	<div class="row">
 		<div class="col-sm-3 col-lg-2">
+			<nav class="navbar navbar-inverse" style="background-image: linear-gradient(to bottom, #ffffff 0, #fff 100%); border-color: #fffcfc; background-color: #efefef !important;">
+				<div class="navbar-header ">
+					<button type="button" class="navbar-toggle"
+							data-toggle="collapse"
+							style="background-image: linear-gradient(to bottom, #777 0, #777 100%); background-color: #777 !important;"
+							data-target="#bs-example-navbar-collapse-2">
+						<span class="sr-only"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+						<h:form id="formMenu">
+						  <p:menu model="#{loginBean.model}" id="menu"/>
+						</h:form>  
+				</div>
+			</nav>
 		</div>
 		<div class="col-sm-9 col-lg-10">
 			 <ui:insert name="content">
