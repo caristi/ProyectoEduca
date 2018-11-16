@@ -60,6 +60,10 @@ public class GrupoBean {
 		
 	}
 	
+	public void listarGrupos(){
+		listaGrupos = grupoSrv.listarGrupos();
+	}
+	
 	public void actualizarGrupo(){
 		
 		grupoSrv.actualizarGrupo(this.grupoDto);

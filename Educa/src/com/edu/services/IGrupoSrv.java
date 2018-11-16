@@ -12,4 +12,6 @@ public interface IGrupoSrv {
 	
 	public void actualizarGrupo(GrupoDto grupoDto);
 	
+	public List<GrupoDto> listarGrupos();
+	
 }

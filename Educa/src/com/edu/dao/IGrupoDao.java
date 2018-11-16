@@ -10,5 +10,7 @@ public interface IGrupoDao {
 	
 	public List<GrupoDto> buscarGrupo(GrupoDto grupoDto);
 	
+	public List<GrupoDto> listarGrupos();
+	
 	public void actualizarGrupo(GrupoDto grupodto);
 }

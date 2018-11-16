@@ -24,6 +24,10 @@ public class GrupoSrvImpl implements IGrupoSrv{
 		grupoDao.actualizarGrupo(grupoDto);
 	}
 	
+	public List<GrupoDto> listarGrupos(){
+		return grupoDao.listarGrupos();
+	}
+	
 	public List<GrupoDto> buscarGrupo(GrupoDto grupoDto){
 		return grupoDao.buscarGrupo(grupoDto);
 	}
